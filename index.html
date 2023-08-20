@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet">
+    <title>Number guess</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-wrap: wrap;
+        }
+        .box
+        {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            position: relative;
+            margin: 10px;
+            width: 100px;
+            height: 100px;  
+            background-color: 	#89CFEF;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: #1C2951;
+            font-family: Rubik Puddles;
+        }
+        .main{
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            width: 650px;
+            height: 200px;
+            background-color:	#1C2951;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .butt{
+            position: relative; 
+            margin: 10px;
+            right: 10px;
+            background-color:#73C2FB;
+	        padding:10px;
+	        font-family: 'Open Sans', sans-serif;
+	        font-size:12px;
+	        text-decoration:none;
+	        color:#fff;
+	        background: #73C2FB;
+	        box-shadow: inset 0px 1px 0px #89CFEF, 0px 6px 0px 	#0E4C92;
+	        border-radius: 5px;
+            border: none;
+        }
+        .butt:active{
+            top: 7px;
+	        box-shadow: inset 0px 1px 0px #89CFEF, inset 0px -1px 0px 	#0F52BA;
+	        color: 	#0080FE ;
+	        text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+	        background: #0F52BA;
+        }
+        .guess{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            top: -63px;
+            left: 55px;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            background-color: #89CFEF;
+            border: 3px solid #0080FE;
+        }
+        .guesses{
+            position: relative;
+            padding: 20px;
+            background-color:#1134A6;
+	        font-family: 'Open Sans', sans-serif;
+	        font-size:12px;
+	        text-decoration:none;
+	        color:#fff;
+	        box-shadow: inset 0px 0.1px 0px #89CFEF, 0px 6px 0px 	#131E3A;
+	        border-radius: 5px 0px 0px 5px;
+        }
+        .remark
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            top: -63px;
+            right: 100px;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            background-color: #89CFEF;
+            border: 3px solid #0080FE;
+        }
+        .resp{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 120px;
+            padding: 20px;
+            background-color:#73C2FB;
+	        font-family: 'Open Sans', sans-serif;
+	        font-size:12px;
+	        text-decoration:none;
+	        color:#fff;
+	        background-image: #73C2FB;
+	        box-shadow: inset 0px 1px 0px #131E3A, 0px 6px 0px 	#0E4C92;
+	        border-radius: 0px 5px 5px 0px;
+        }
+        .reset
+        {
+            position: relative;
+            width: 670px;
+            height: 30px;
+            text-transform: uppercase;
+            background: #73C2FB;
+	        box-shadow: inset 0px 1px 0px #89CFEF, 0px 6px 0px 	#0E4C92;
+            border-radius: 5px;
+        }
+        .reset:active{
+            top:7px;
+	        box-shadow: inset 0px 1px 0px #89CFEF, inset 0px -1px 0px 	#0F52BA;
+	        color: 	#0080FE ;
+	        text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+	        background: #0F52BA;
+        }
+        .high{
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            position: relative;
+            top: -63px;
+            left: -20px;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            background-color: #89CFEF;
+            border: 3px solid #0080FE;
+        }
+        .high span{
+            position: relative;
+            left: 10px;
+        }
+        .score{
+            position: relative;
+            right: 80px;
+            padding: 20px;
+            background-color:#73C2FB;
+	        font-family: 'Open Sans', sans-serif;
+	        font-size:12px;
+	        text-decoration:none;
+	        color:#fff;
+	        background-image: #73C2FB;
+	        box-shadow: inset 0px 1px 0px #89CFEF, 0px 6px 0px 	#0E4C92;
+	        border-radius: 5px;
+        }
+        @keyframes spin1 { 100% 
+            { transform:rotate(360deg);
+            background: green; 
+        } }
+        @keyframes wrong{
+            50%{
+                transform:translateX(10px);
+            }
+            75%{
+                transform: translateX(-10px);
+            }
+            100%{
+                transform: translate(0);
+                background: red;
+            }
+        }
+        @keyframes wrong1{
+            50%{
+                transform:translateX(10px);
+            }
+            75%{
+                transform: translateX(-10px);
+            }
+            100%{
+                transform: translate(0);
+                background: red;
+            }
+        }
+        @keyframes reset{
+            100%{
+                background-color: #73C2FB;
+            }
+        }
+        h1{
+            display: inline-block;
+            color: white;
+            width: 660px;
+            height: 35px;
+            margin-bottom: 5px;
+        }
+        h1:before{
+            display: inline-block;
+            position: relative;
+            text-transform: uppercase;
+            content: "Guess the number";
+            width: 100%;
+            height: 100%;
+            letter-spacing: 0.65em;
+            left: 5px;
+            color: black;
+            white-space: nowrap;
+            border-right: 4px solid black;
+            animation: appear 5s 0s infinite both;
+            overflow: hidden;
+            text-shadow: 2px 1px 3px black;
+            font-stretch: expanded;
+            font-size: xx-large;
+        }
+        @keyframes appear{
+            0%,100%{
+                width: 0%;
+            }
+            80%{
+                width: 100%;
+            }
+        }
+        .enter{
+            position: relative;
+            z-index: 3;
+            top: 90px;
+            right: 220px;
+            color:#89CFEF;
+            width: 200px;
+        }
+        .info{
+            position: relative;
+            z-index: 3;
+            right: 180px;
+            top: -65px;
+            color:#89CFEF;
+        }
+        .adv{
+        display:none;
+        position:absolute;
+        top: 100vh;
+        left: 10vw;
+        }
+        @media screen and (max-width: 420px) {
+            h1{
+                position: relative;
+                width: 100vw;
+                letter-spacing: 0em;
+            }
+            h1:before{
+            display: inline-block;
+            position: relative;
+            text-transform: uppercase;
+            content: "Guess the number";
+            width: 100vw;
+            height: 100%;
+            letter-spacing: 0em;
+            left: 5px;
+            color: black;
+            white-space: nowrap;
+            border-right: 4px solid black;
+            animation: appear 5s 0s infinite both;
+            overflow: hidden;
+            text-shadow: 2px 1px 3px black;
+            font-stretch: expanded;
+            font-size: xx-large;
+        }
+            body{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+  .main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh;
+    width: 100vw;
+    position: relative;
+    align-self: flex-start;
+  }
+  .reset{
+    display: flex;
+    align-self: flex-start;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+  }
+  .box{
+    position: relative;
+    top: 13%;
+    right: 26%;
+  }
+  .butt{
+    position: relative;
+    top: -8%;
+  }
+  .butt:active{
+    top: -6%;
+  }
+  .guess{
+    position: relative;
+    z-index: 5;
+    top: 8.4vh;
+    left: -40%;
+  }
+  .guesses{
+    position: relative;
+    top: 9vh;
+    left: -40%;
+  }
+
+  .resp{
+    position: relative;
+    top: 3vh;
+    left: -12%;
+  }
+  .remark{
+    position: relative;
+    z-index: 5;
+    top: -10.8vh;
+    left: -12%;
+  }
+  .high{
+    position: relative;
+    top: -76.5%;
+    left: 33%;
+  }
+  .score{
+    position: relative;
+    top: -73.5%;
+    left: 33%;
+  }
+  .enter{
+    right: 25%;
+  }
+  .info{
+    left: -10%;
+  }
+  .adv{
+    display: block;
+  }
+}
+    </style>
+</head>
+<body>
+    <span class="adv">better to use desktop mode</span>
+    <span class="enter">::ENTER A NUMBER BETWEEN 0 AND 100 HERE</span>
+    <h1>Guess the number</h1>
+    <div class="main">
+    <input type="number" id="eguess" class="box">
+    <button id="bguess" class="butt">Submit</button>
+    <div class="guess">Guesses:</div>
+    <div class="guesses">0</div>
+    <div class="resp">Start The Game</div>
+    <div class="remark">Remark:</div>   
+    <div class="high"><span> High Score:</span></div>
+    <div class="score">0</div> 
+</div>
+    <button class = "reset">Restart</button>
+    <span class="info">*PRESS RESTART FOR ANOTHER TURN</span>
+
+    <script src="guessthenumb.js"></script>
+</body>
+</html>
